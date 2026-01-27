@@ -1,12 +1,12 @@
-Функция: тестирование приложения
+Feature: Records management
 
-  Сценарий: добавление нового элемента
-    включая, что я на странице добавления записей
-    когда я создам запись: "тестовая запись"
-    тогда список записей содержит: "тестовая запись"
+  Scenario: Adding a New Item
+    Given I am on the records page
+    When I add a record: "test record"
+    Then the list contains: "test record"
 
-  Сценарий: Пометить запись как выполненную
-    включая, что я на странице записей
-    когда я добавлю запись: "кот"
-    и отмечаю запись: "кот"
-    запись помечается, как выполненная
+  Scenario: Mark post as completed
+    Given I am on the records page
+    When I add a record: "cat"
+    And I mark the record: "cat" as completed
+    Then the record is marked as completed
