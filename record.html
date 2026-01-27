@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список записей</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 50px auto; }
+        input[name="new-todo"] { 
+            width: 70%; padding: 12px; font-size: 16px; 
+            border: 2px solid #ccc; border-radius: 4px;
+        }
+        .todo-list { 
+            list-style: none; padding: 0; margin: 20px 0; 
+        }
+        .todo-list li { 
+            padding: 12px; border-bottom: 1px solid #eee; 
+            display: flex; align-items: center;
+        }
+        .todo-list .completed { 
+            text-decoration: line-through; opacity: 0.6; 
+        }
+        input[type="checkbox"] { margin-right: 10px; transform: scale(1.2); }
+        button { padding: 8px 12px; background: #007cba; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="todoapp">
+        <h1>мои записи</h1>
+        <input name="new-todo" placeholder="добавить запись" 
+               onkeypress="if(event.keyCode==13) addTodo(this.value, this)">
+        <ul class="todo-list"></ul>
+    </div>
+
+    <script>
+        let todos = [];
+        
+        function addTodo(text, input) {
+            if (!text.trim()) return;
+            todos.push({id: Date.now(), text: text.trim(), completed: false});
+            input.value = '';
+            render();
+        }
+        
+        function toggle(id) {
+            todos = todos.map(t => t.id === id ? {...t, completed: !t.completed} : t);
+            render();
+        }
+        
+        function render() {
+            const list = document.querySelector('.todo-list');
+            list.innerHTML = todos.map(t => `
+                <li class="${t.completed ? 'completed' : ''}">
+                    <input type="checkbox" ${t.completed ? 'checked' : ''} 
+                           onclick="toggle(${t.id})">
+                    <label>${t.text}</label>
+                </li>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
